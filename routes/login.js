@@ -11,7 +11,7 @@ Router.post("/",async(req, res)=>{
 
     if(!email || !password)
     {
-        return res.status(200).json({"credentials":"invalid"});
+        return res.status(404).json({"credentials":"unknown error"});
     }
     
     try {
@@ -25,12 +25,10 @@ Router.post("/",async(req, res)=>{
                 return res.status(200).json({"credentials":"valid","token":JWT})
             }
             else{
-                return res.status(200).json({"credentials":"invalid"});
+                return res.status(404).json({"credentials":"invalid password"});
             }
         }
-        {
-            return res.status(200).json({"credentials":"invalid"});
-        }
+        return res.status(404).json({"credentials":"not found"});
 
     } catch (error) {
         console.log(error);

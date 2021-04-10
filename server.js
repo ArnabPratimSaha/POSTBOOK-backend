@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const LogIn= require("./routes/login");
 const SignUp=require("./routes/signup");
+const Home=require("./routes/home");
 
 const app=express();
 app.use(cors());
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGODBSERVER, {useNewUrlParser: true, useUnifiedTo
 
 app.use("/login",LogIn);
 app.use("/signup",SignUp);
+app.use("/home",Home);
 
 const PORT=process.env.PORT||5000;
 

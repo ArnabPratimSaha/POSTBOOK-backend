@@ -19,7 +19,7 @@ Router.post("/",async(req, res)=>{
 
     if(!username || !email || !password)
     {
-        return res.status(200).json({"credentials":"invalid"});
+        return res.status(404).json({"credentials":"invalid"});
     }
 
     try {
@@ -39,7 +39,7 @@ Router.post("/",async(req, res)=>{
         const response=await UserModel.findOne({email:email})
         if(response)
         {
-            return res.status(200).json({"credentials":"invalid"});
+            return res.status(404).json({"credentials":"invalid"});
         }
 
     } catch (error) {

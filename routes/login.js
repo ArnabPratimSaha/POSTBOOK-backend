@@ -1,5 +1,6 @@
 const Router=require("express").Router();
 const UserModel=require("../models/userModel");
+const jwt=require("jsonwebtoken");
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -20,14 +21,15 @@ Router.post("/",async(req, res)=>{
         {
             const validPassword = await bcrypt.compare(password, foundUser.password);
             if(validPassword){
-                return res.status(200).json({"credentials":"valid"})
+                const JWT=jwt.sign({ userid: foundUser._id }, process.env.JWTSECRET);
+                return res.status(200).json({"credentials":"valid","token":JWT})
             }
             else{
                 return res.status(200).json({"credentials":"invalid"});
             }
         }
         {
-            return res.status(200).json({"credentials":"unknown"});
+            return res.status(200).json({"credentials":"invalid"});
         }
 
     } catch (error) {
